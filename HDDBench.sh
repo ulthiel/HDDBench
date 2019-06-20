@@ -11,6 +11,15 @@
 #
 ################################################################################
 
+# Check if argument not empty
+if [ -z "$1" ]
+then
+  echo "Please give path for test file to be written to as argument"
+  exit 1
+fi
+
+echo "Testing $1"
+
 ################################################################################
 # Function to purge memory
 ################################################################################
@@ -36,22 +45,14 @@ run_purge () {
 }
 
 ################################################################################
-# Main program
+# Back to main program
 ################################################################################
 
-# Check if argument not empty
-if [ -z "$1" ]
-then
-  echo "Please give path for test file to be written to as argument"
-  exit 1
-fi
-
-# Need sudo to purge
+# Get sudo to purge
 echo "Getting sudo rights for purging memory..."
 [ "$UID" -eq 0 ] || sudo ls > /dev/null
 
 #Write test
-echo "Testing $1"
 echo "Running write test..."
 write=$(dd if=/dev/zero bs=2048k of="$1"/tstfile count=1024 2>&1 | grep sec | awk '{print $1 / 1024 / 1024 / $5, "MB/sec" }')
 echo "Write speed: $write"
