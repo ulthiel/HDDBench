@@ -1,26 +1,31 @@
 #!/bin/bash
 ################################################################################
 #
-# Determine HDD write/read speed under Linux/MacOS.
+# Determine HDD write/read speed under Linux and MacOS.
 #
-# Argument needs to be a path where test file is written to.
+# You can pass as first argument a path for the test file to be written to.
 #
-# Script is basically from https://www.amsys.co.uk/using-command-line-to-benchmark-disks/ but made some improvements and made it work under Linux as well.
+# Script is basically from 
+# https://www.amsys.co.uk/using-command-line-to-benchmark-disks/.
+# I made some improvements and made it work under Linux as well.
+# Important is "purging" to avoid distortion by caching.
 #
 # Ulrich Thiel, 2019
+# ulthiel.com/math
+# math@ulthiel.com
 #
 ################################################################################
 
 ################################################################################
-# Check if argument not empty
+# Get path for test file
 ################################################################################
 if [ -z "$1" ]
 then
-  echo "Please give path for test file to be written to as argument"
-  exit 1
+  read -p "Path for test file (e.g. /tmp): " path
+else
+  path="$1"
+  echo "Testing $path"
 fi
-
-echo "Testing $1"
 
 ################################################################################
 # Determine OS (Mac and Linux behave a bit differently)
@@ -54,12 +59,12 @@ run_purge () {
 ################################################################################
 
 # Get sudo for purging
-echo "Getting sudo rights for purging memory..."
+echo "Getting sudo rights for cleaning memory..."
 sudo ls > /dev/null
 
 #Write test
 echo "Running write test..."
-write=$(dd if=/dev/zero bs=2048k of="$1"/tstfile count=1024 2>&1 | grep bytes)
+write=$(dd if=/dev/zero bs=2048k of="$path"/.hddtstfile count=1024 2>&1 | grep bytes)
 
 #Purge
 echo "Purging memory for read test..."
@@ -67,12 +72,12 @@ run_purge
 
 #Read test
 echo "Running read test..."
-read=$(dd if="$1"/tstfile bs=2048k of=/dev/null count=1024 2>&1 | grep bytes)
+read=$(dd if="$path"/.hddtstfile bs=2048k of=/dev/null count=1024 2>&1 | grep bytes)
 
 #Cleanup
 echo "Cleaning up..."
 run_purge
-rm "$1"/tstfile
+rm "$path"/.hddtstfile
 
 # Report (dd output is a bit different between MacOS and Linux)
 if [ "${machine}" = "Mac" ]
