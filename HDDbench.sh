@@ -42,7 +42,7 @@ esac
 run_purge () {
   if [ "${machine}" = "Mac" ]
   then
-    sudo purge
+    sudo sync && sudo purge
   elif [ "${machine}" = "Linux" ]
   then
     sudo sync && sudo echo 3 > /proc/sys/vm/drop_caches
