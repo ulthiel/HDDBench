@@ -78,7 +78,7 @@ sudo ls > /dev/null
 
 #Write test
 echo "Running write test..."
-write=$($ddcmd if=/dev/zero of="$path"/.hddtstfile bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $10 $11 }')
+write=$($ddcmd if=/dev/zero of="$path"/.hddtstfile bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
 
 #Clean memory
 echo "Cleaning memory for read test..."
@@ -86,7 +86,7 @@ drop_cache
 
 #Read test
 echo "Running read test..."
-read=$($ddcmd if="$path"/.hddtstfile of=/dev/null bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $10 $11 }')
+read=$($ddcmd if="$path"/.hddtstfile of=/dev/null bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
 
 #Cleanup
 echo "Cleaning up..."
