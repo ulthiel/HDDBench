@@ -72,19 +72,22 @@ clean_mem () {
 # Main program
 ################################################################################
 
-#Write test
+# Write test
+# The conv=fdatasync seems to be the best option, see
+# https://linuxaria.com/pills/how-to-properly-use-dd-on-linux-to-benchmark-the-write-speed-of-your-disk
 echo "Running write test..."
 write=$(sync; $ddcmd if=/dev/zero of="$path"/.hddtstfile bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
 
-#Clean memory
+# Clean memory
+# If we don't do this, then read will be done from cache
 echo "Cleaning memory (needs sudo)..."
 clean_mem
 
-#Read test
+# Read test
 echo "Running read test..."
 read=$($ddcmd if="$path"/.hddtstfile of=/dev/null bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
 
-#Cleanup
+# Cleanup
 echo "Cleaning up..."
 clean_mem
 rm "$path"/.hddtstfile
