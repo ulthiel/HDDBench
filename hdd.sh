@@ -1,13 +1,13 @@
 #!/bin/bash
 ################################################################################
 #
-# Determine HDD write/read speed under Linux and MacOS.
+# Determine HDD write/read speed under Linux and macOS.
 #
 # You will have to enter a path for the test file to be written to. This can
 # also be passed as argument to the script.
 #
 # This script uses dd on Linux and the equivalent gdd from the coreutils on
-# MacOS. The MacOS native dd behaves a bit differently and has less options.
+# macOS. The macOS native dd behaves a bit differently and has less options.
 # If you don't have gdd installed, you need to do "brew install coreutils".
 #
 # Ulrich Thiel, 2019
@@ -46,7 +46,7 @@ case "${unameOut}" in
 esac
 
 ################################################################################
-# Correct dd command
+# Correct dd command (use gdd from coreutils for macOS)
 ################################################################################
 if [ "${machine}" = "Mac" ]
 then
@@ -58,13 +58,13 @@ fi
 ################################################################################
 # Function to clean memory
 ################################################################################
-drop_cache () {
+clean_mem () {
   if [ "${machine}" = "Mac" ]
   then
     sudo sync && sudo purge
   elif [ "${machine}" = "Linux" ]
   then
-    sudo sync && sudo echo 3 > /proc/sys/vm/drop_caches
+    sudo sync && sudo echo 3 > /proc/sys/vm/clean_mems
   fi
 }
 
@@ -72,17 +72,13 @@ drop_cache () {
 # Main program
 ################################################################################
 
-# Get sudo for purging
-echo "Getting sudo rights for cleaning memory..."
-sudo ls > /dev/null
-
 #Write test
 echo "Running write test..."
-write=$($ddcmd if=/dev/zero of="$path"/.hddtstfile bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
+write=$(sync; $ddcmd if=/dev/zero of="$path"/.hddtstfile bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
 
 #Clean memory
-echo "Cleaning memory for read test..."
-drop_cache
+echo "Cleaning memory (needs sudo)..."
+clean_mem
 
 #Read test
 echo "Running read test..."
@@ -90,9 +86,9 @@ read=$($ddcmd if="$path"/.hddtstfile of=/dev/null bs=$bs count=$count conv=fdata
 
 #Cleanup
 echo "Cleaning up..."
-#drop_cache
+clean_mem
 rm "$path"/.hddtstfile
 
 # Report
-echo "Write speed: $write"
-echo "Read speed: $read"
+echo "HDD write speed: $write"
+echo "HDD read speed: $read"
