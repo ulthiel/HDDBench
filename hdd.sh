@@ -73,8 +73,8 @@ clean_mem () {
 ################################################################################
 
 # Write test
-# The conv=fdatasync seems to be the best option, see
-# https://linuxaria.com/pills/how-to-properly-use-dd-on-linux-to-benchmark-the-write-speed-of-your-disk
+# The conv=fdatasync seems ensures that all data is really written before dd
+# quits and reports speed
 echo "Running write test..."
 write=$(sync; $ddcmd if=/dev/zero of="$path"/.hddtstfile bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
 
@@ -93,5 +93,7 @@ clean_mem
 rm "$path"/.hddtstfile
 
 # Report
-echo "HDD write speed: $write"
-echo "HDD read speed: $read"
+echo "-------------------------"
+echo "Write speed: $write"
+echo "Read speed: $read"
+echo "-------------------------"
