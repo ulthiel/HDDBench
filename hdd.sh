@@ -3,18 +3,24 @@
 #
 # Determine HDD write/read speed under Linux and MacOS.
 #
-# You can pass as first argument a path for the test file to be written to.
+# You will have to enter a path for the test file to be written to. This can
+# also be passed as argument to the script.
 #
-# Script is basically from
-# https://www.amsys.co.uk/using-command-line-to-benchmark-disks/.
-# I made some improvements and made it work under Linux as well.
-# Important is "purging" to avoid distortion by caching.
+# This script uses dd on Linux and the equivalent gdd from the coreutils on
+# MacOS. The MacOS native dd behaves a bit differently and has less options.
+# If you don't have gdd installed, you need to do "brew install coreutils".
 #
 # Ulrich Thiel, 2019
 # ulthiel.com/math
-# math@ulthiel.com
+# mail@ulthiel.com
 #
 ################################################################################
+
+################################################################################
+# Options
+################################################################################
+bs=1G #block size
+count=2 #number of blocks
 
 ################################################################################
 # Get path for test file
@@ -28,9 +34,7 @@ else
 fi
 
 ################################################################################
-# Well will use dd for the benchmark.
-# The output of dd on Linux is a tiny bit different than on MacOS.
-# To parse correctly, we have to distinguish this.
+# Get OS (Linux and Mac behave a bit differently)
 ################################################################################
 unameOut="$(uname -s)"
 case "${unameOut}" in
@@ -42,10 +46,19 @@ case "${unameOut}" in
 esac
 
 ################################################################################
-# Function to purge memory
-# Linux version from https://serverfault.com/questions/597115/why-drop-caches-in-linux
+# Correct dd command
 ################################################################################
-run_purge () {
+if [ "${machine}" = "Mac" ]
+then
+  ddcmd=gdd
+else
+  ddcmd=dd
+fi
+
+################################################################################
+# Function to clean memory
+################################################################################
+drop_cache () {
   if [ "${machine}" = "Mac" ]
   then
     sudo sync && sudo purge
@@ -65,44 +78,21 @@ sudo ls > /dev/null
 
 #Write test
 echo "Running write test..."
-if [ "${machine}" = "Mac" ]
-then
-  write=$(dd if=/dev/zero of="$path"/.hddtstfile bs=2048k count=1024 conv=sync 2>&1 | grep bytes)
-else
-  write=$(dd if=/dev/zero of="$path"/.hddtstfile bs=2048k count=1024 conv=fdatasync 2>&1 | grep bytes)
-fi
+write=$($ddcmd if=/dev/zero of="$path"/.hddtstfile bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $10 $11 }')
 
-#Purge
+#Clean memory
 echo "Cleaning memory for read test..."
-#run_purge
+drop_cache
 
 #Read test
 echo "Running read test..."
-if [ "${machine}" = "Mac" ]
-then
-  read=$(dd if="$path"/.hddtstfile of=/dev/null bs=2048k count=1024 conv=sync 2>&1 | grep bytes)
-else
-  read=$(dd if="$path"/.hddtstfile of=/dev/null bs=2048k count=1024 conv=fdatasync 2>&1 | grep bytes)
-fi
+read=$($ddcmd if="$path"/.hddtstfile of=/dev/null bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $10 $11 }')
 
 #Cleanup
 echo "Cleaning up..."
-#run_purge
+#drop_cache
 rm "$path"/.hddtstfile
 
-# Report (dd output is a bit different between MacOS and Linux)
-if [ "${machine}" = "Mac" ]
-then
-  writerep=$(echo $write | awk '{print $1 / 1000 / 1000 / $5, "MB/sec" }')
-else
-  writerep=$(echo $write | awk '{print $1 / 1000 / 1000 / $8, "MB/sec" }')
-fi
-echo "Write speed: $writerep"
-
-if [ "${machine}" = "Mac" ]
-then
-  readrep=$(echo $read | awk '{print $1 / 1000 / 1000 / $5, "MB/sec" }')
-else
-  readrep=$(echo $read | awk '{print $1 / 1000 / 1000 / $8, "MB/sec" }')
-fi
-echo "Read speed: $readrep"
+# Report
+echo "Write speed: $write"
+echo "Read speed: $read"
