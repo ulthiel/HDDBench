@@ -5,7 +5,7 @@
 #
 # You can pass as first argument a path for the test file to be written to.
 #
-# Script is basically from 
+# Script is basically from
 # https://www.amsys.co.uk/using-command-line-to-benchmark-disks/.
 # I made some improvements and made it work under Linux as well.
 # Important is "purging" to avoid distortion by caching.
@@ -28,8 +28,9 @@ else
 fi
 
 ################################################################################
-# Determine OS (Mac and Linux behave a bit differently)
-# From https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
+# Well will use dd for the benchmark.
+# The output of dd on Linux is a tiny bit different than on MacOS.
+# To parse correctly, we have to distinguish this.
 ################################################################################
 unameOut="$(uname -s)"
 case "${unameOut}" in
@@ -64,19 +65,29 @@ sudo ls > /dev/null
 
 #Write test
 echo "Running write test..."
-write=$(dd if=/dev/zero bs=2048k of="$path"/.hddtstfile count=1024 2>&1 | grep bytes)
+if [ "${machine}" = "Mac" ]
+then
+  write=$(dd if=/dev/zero of="$path"/.hddtstfile bs=2048k count=1024 conv=sync 2>&1 | grep bytes)
+else
+  write=$(dd if=/dev/zero of="$path"/.hddtstfile bs=2048k count=1024 conv=fdatasync 2>&1 | grep bytes)
+fi
 
 #Purge
-echo "Purging memory for read test..."
-run_purge
+echo "Cleaning memory for read test..."
+#run_purge
 
 #Read test
 echo "Running read test..."
-read=$(dd if="$path"/.hddtstfile bs=2048k of=/dev/null count=1024 2>&1 | grep bytes)
+if [ "${machine}" = "Mac" ]
+then
+  read=$(dd if="$path"/.hddtstfile of=/dev/null bs=2048k count=1024 conv=sync 2>&1 | grep bytes)
+else
+  read=$(dd if="$path"/.hddtstfile of=/dev/null bs=2048k count=1024 conv=fdatasync 2>&1 | grep bytes)
+fi
 
 #Cleanup
 echo "Cleaning up..."
-run_purge
+#run_purge
 rm "$path"/.hddtstfile
 
 # Report (dd output is a bit different between MacOS and Linux)
