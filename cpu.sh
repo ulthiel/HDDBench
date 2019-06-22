@@ -17,9 +17,10 @@ int=$({ echo '2^2^23' | time -p bc > /dev/null; } 2>&1 | grep real | awk '{print
 
 ################################################################################
 # Floating point test
+# This is the Savage benchmark
 ################################################################################
 echo "Running floating point test..."
-float=$({ echo 'scale=4; (e(1)-a(1))^2^19' | time -p bc -l > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
+float=$({ echo 'define tan(x) {return s(x)/c(x);}; scale=12; x=1; for(i=1;i<=160000;++i){x=tan(a(e(l(sqrt(x^2)))))+1.0;}; x;' | time -p bc -l > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
 
 ################################################################################
 # Report
