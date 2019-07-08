@@ -73,12 +73,12 @@ file="$path/.hddtstfile"
 flush
 
 echo "Running write test..."
-write=$($dd if=/dev/zero of=$file bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
+write=$($dd if=/dev/zero of=$file bs=$bs count=$count oflag=dsync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
 
 flush
 
 echo "Running read test..."
-read=$($dd if=$file of=/dev/null bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
+read=$($dd if=$file of=/dev/null bs=$bs count=$count iflag=dsync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
 
 flush
 rm $file

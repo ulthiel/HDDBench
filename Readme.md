@@ -15,13 +15,14 @@ Here's an example:
 ```
 $ sh hdd.sh
 Path for test file (e.g. /tmp): /tmp
+Flushing caches (needs sudo)...
 Running write test...
-Cleaning memory (needs sudo)...
+Flushing caches (needs sudo)...
 Running read test...
-Cleaning up...
+Flushing caches (needs sudo)...
 -------------------------
-Write speed: 1501.73 MB/s
-Read speed: 2213.89 MB/s
+Write speed: 1.2GB/s
+Read speed: 2.5GB/s
 -------------------------
 ```
 
@@ -29,9 +30,9 @@ Read speed: 2213.89 MB/s
 
 | HDD | Write [MB/s] | Read [MB/s] |
 | --- | ---- | ----- |
-| Apple SSD SM0512L   | 1501.73  | 2213.89  |
-| WD My Passport 25E1  | 80.76  |  83.01 |
-| SanDisk Ultra Fit   | 30.19  | 153.61  |
+| Apple SSD SM0512L   | 1200  | 2500  |
+| WD My Passport 25E1  | 63.8  |  77.6 |
+| SanDisk Ultra Fit   | 36.5  | 159  |
 
 
 ## CPU
