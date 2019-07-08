@@ -23,8 +23,15 @@ echo "Running floating point test..."
 float=$({ echo 'define tan(x) {return s(x)/c(x);}; scale=12; x=1; for(i=1;i<=160000;++i){x=tan(a(e(l(sqrt(x^2)))))+1.0;}; x;' | time -p bc -l > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
 
 ################################################################################
+# SHA256SUM
+################################################################################
+#echo "Running SHA256 test..."
+#sha=$({ time -p sh -c "dd if=/dev/zero bs=1g count=10 | sha256sum" > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
+
+################################################################################
 # Report
 ################################################################################
 echo "-------------------------"
 echo "Integer: $int"
 echo "Floating point: $float"
+#echo "SHA: $sha"

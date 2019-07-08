@@ -48,12 +48,14 @@ esac
 # Function to clean memory
 ################################################################################
 clean_mem () {
+  sync
+  echo "Cleaning memory (needs sudo)..."
   if [ "${machine}" = "Mac" ]
   then
-    sudo sync && sudo purge
+    sudo purge
   elif [ "${machine}" = "Linux" ]
   then
-    sudo sync && sudo echo 3 > /proc/sys/vm/clean_mems
+    sudo echo 3 > /proc/sys/vm/clean_mems
   fi
 }
 
@@ -65,9 +67,11 @@ clean_mem () {
 if [ "${machine}" = "Mac" ]
 then
   bs=`echo "$bs" | tr '[:upper:]' '[:lower:]'`
+  count=`echo "$count" | tr '[:upper:]' '[:lower:]'`
 elif [ "${machine}" = "Linux" ]
 then
   bs=`echo "$bs" | tr '[:lower:]' '[:upper:]'`
+  count=`echo "$count" | tr '[:lower:]' '[:upper:]'`
 fi
 
 file="$path/.hddtstfile"
@@ -88,19 +92,11 @@ elif [ "${machine}" = "Linux" ]
 then
   write=$(dd if=/dev/zero of=$file bs=$bs count=$count conv=fdatasync 2>&1 | grep bytes | awk '{print $(NF-1)$(NF)}')
 fi
-sync
 
 # Clean memory
 # If we don't do this, then read will be done from cache and we don't want
 # this of course
-echo "Cleaning memory (needs sudo)..."
-if [ "${machine}" = "Mac" ]
-then
-  sudo purge
-elif [ "${machine}" = "Linux" ]
-then
-  sudo echo 3 > /proc/sys/vm/clean_mems
-fi
+clean_mem
 
 # Read test
 echo "Running read test..."
@@ -118,6 +114,7 @@ fi
 
 # Cleanup
 echo "Cleaning up..."
+clean_mem
 rm $file
 
 # Report

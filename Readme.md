@@ -27,5 +27,28 @@ Read speed: 2213.89 MB/s
 
 | HDD | Write [MB/s] | Read [MB/s] |
 | --- | ---- | ----- |
-|APPLE SSD SM0512L   | 1501.73  | 2213.89  |
-| WD My Passport 25E1, External USB  | 80.76  |  83.01 |
+| Apple SSD SM0512L   | 1501.73  | 2213.89  |
+| WD My Passport 25E1  | 80.76  |  83.01 |
+| SanDisk Ultra Fit   | 30.19  | 153.61  |
+
+
+## CPU
+
+The script ```cpu.sh``` runs very simple integer and floating point computations to determine relative CPU speed.
+
+Here's an example:
+
+```
+$ sh cpu.sh
+Running integer test...
+Running floating point test...
+-------------------------
+Integer: 59.30s
+Floating point: 58.19s
+```
+
+### Results
+
+| CPU | Integer [s] | Float [s] |
+| --- | ----------- | --------- |
+| Intel(R) Core(TM) i5-8600 CPU @ 3.10GHz | 59.30 | 58.19 |
