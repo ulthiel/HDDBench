@@ -57,5 +57,5 @@ Bzip2: 47.40s
 | --- | ----------------- | ---------- | --------- |
 | Intel(R) Core(TM) i5-8600 CPU @ 3.10GHz | 47.45 | 45.75 | 47.40 |
 | Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz | 56.73 | 52.93 | 62.75 |
-| Intel(R) Core(TM) i7-7Y75 CPU @ 1.30GHz |  |
+| Intel(R) Core(TM) i7-7Y75 CPU @ 1.30GHz | 56.78 | 61.96 | 63.73 |
 | Intel(R) Xeon(R) CPU E5-2620 @ 2.00GHz  | 88.47 | 104.90 | 103.85 |
