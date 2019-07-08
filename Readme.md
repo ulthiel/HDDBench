@@ -1,6 +1,8 @@
 # SimpleBench
 
-Very simple bash scripts for Linux and macOS to test computer performance. Nothing won't be super accurate but should give a rough estimate. **Use at your own risk.**
+Very simple bash scripts for Linux and macOS to test computer performance by just using GNU Core Utilities. Nothing won't be super accurate but should give a rough estimate. For macOS you will have to install the GNU coreutils via ```brew install coreutils```; you possibly first have to install [Homebrew](https://brew.sh) to do this.
+
+**Use at your own risk.**
 
 ## HDD
 
@@ -34,22 +36,26 @@ Read speed: 2213.89 MB/s
 
 ## CPU
 
-The script ```cpu.sh``` determines relative CPU speed by running a very simple prime number check algorithm.
+The script ```cpu.sh``` determines relative CPU speed by running various tasks.
 
 Here's an example:
 
 ```
 $ sh cpu.sh
-sh cpu.sh
+Running Factorization test...
+Running SHA256 test...
+Running Bzip test...
 -------------------------
-Prime: 42.52s
+Factorization: 47.45s
+SHA256: 45.75s
+Bzip2: 47.40s
 ```
 
 ### Results
 
-| CPU | Prime [s] |
-| --- | ----------- |
-| Intel(R) Core(TM) i5-8600 CPU @ 3.10GHz | 42.52 |
-| Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz | |
+| CPU | Factorization [s] | SHA256 [s] | Bzip2 [s] |
+| --- | ----------------- | ---------- | --------- |
+| Intel(R) Core(TM) i5-8600 CPU @ 3.10GHz | 47.45 | 45.75 | 47.40 |
+| Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz | 56.73 | 52.93 | 62.75 |
 | Intel(R) Core(TM) i7-7Y75 CPU @ 1.30GHz |  |
-| Intel(R) Xeon(R) CPU E5-2620 @ 2.00GHz  |  |
+| Intel(R) Xeon(R) CPU E5-2620 @ 2.00GHz  | 88.47 | 104.90 | 103.85 |
