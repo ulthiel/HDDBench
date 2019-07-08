@@ -1,37 +1,46 @@
 #!/bin/bash
 ################################################################################
 #
-# CPU benchmark running various tests.
+# Simple CPU benchmark
 #
 # Ulrich Thiel, 2019
 # ulthiel.com/math
 # mail@ulthiel.com
 #
+# We simply check, using bash functions only, whether some number is a prime
+# number.
 ################################################################################
 
 ################################################################################
-# Integer test
+# Very simple function to check whether a number is a prime number.
+# Efficiency is not the point here.
 ################################################################################
-echo "Running integer test..."
-int=$({ echo '2^2^23' | time -p bc > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
+function is_prime(){
+  if [[ $1 -eq 2 ]] || [[ $1 -eq 3 ]]; then
+    return 1  # prime
+  fi
+  if [[ $(($1 % 2)) -eq 0 ]] || [[ $(($1 % 3)) -eq 0 ]]; then
+    return 0  # not a prime
+  fi
+  i=5; w=2
+  while [[ $((i * i)) -le $1 ]]; do
+    if [[ $(($1 % i)) -eq 0 ]]; then
+      return 0  # not a prime
+    fi
+    i=$((i + w))
+    w=$((6 - w))
+  done
+  return 1  # prime
+}
 
 ################################################################################
-# Floating point test
-# This is the Savage benchmark
+# Run a test
 ################################################################################
-echo "Running floating point test..."
-float=$({ echo 'define tan(x) {return s(x)/c(x);}; scale=12; x=1; for(i=1;i<=160000;++i){x=tan(a(e(l(sqrt(x^2)))))+1.0;}; x;' | time -p bc -l > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
-
-################################################################################
-# SHA256SUM
-################################################################################
-#echo "Running SHA256 test..."
-#sha=$({ time -p sh -c "dd if=/dev/zero bs=1g count=10 | sha256sum" > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
+n=35184372088891 #next prime after 2^45
+t=$({  time -p is_prime $n > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
 
 ################################################################################
 # Report
 ################################################################################
 echo "-------------------------"
-echo "Integer: $int"
-echo "Floating point: $float"
-#echo "SHA: $sha"
+echo "Prime: $t"

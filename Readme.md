@@ -34,24 +34,22 @@ Read speed: 2213.89 MB/s
 
 ## CPU
 
-The script ```cpu.sh``` runs very simple integer and floating point computations using bc to determine relative CPU speed.
+The script ```cpu.sh``` determines relative CPU speed by running a very simple prime number check algorithm.
 
 Here's an example:
 
 ```
 $ sh cpu.sh
-Running integer test...
-Running floating point test...
+sh cpu.sh
 -------------------------
-Integer: 59.30s
-Floating point: 58.19s
+Prime: 42.52s
 ```
 
 ### Results
 
-| CPU | Integer [s] | Float [s] |
-| --- | ----------- | --------- |
-| Intel(R) Core(TM) i5-8600 CPU @ 3.10GHz | 59.30 | 58.19 |
-| Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz | 68.46 | 44.69 |
-| Intel(R) Core(TM) i7-7Y75 CPU @ 1.30GHz | 76.31  | 78.28 |
-| Intel(R) Xeon(R) CPU E5-2620 @ 2.00GHz  | 103.65 | 69.64 |
+| CPU | Prime [s] |
+| --- | ----------- |
+| Intel(R) Core(TM) i5-8600 CPU @ 3.10GHz | 42.52 |
+| Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz | |
+| Intel(R) Core(TM) i7-7Y75 CPU @ 1.30GHz |  |
+| Intel(R) Xeon(R) CPU E5-2620 @ 2.00GHz  |  |
