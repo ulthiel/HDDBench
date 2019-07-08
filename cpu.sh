@@ -6,41 +6,73 @@
 # Ulrich Thiel, 2019
 # ulthiel.com/math
 # mail@ulthiel.com
-#
-# We simply check, using bash functions only, whether some number is a prime
-# number.
+
 ################################################################################
 
 ################################################################################
-# Very simple function to check whether a number is a prime number.
-# Efficiency is not the point here.
+# Get OS
 ################################################################################
-function is_prime(){
-  if [[ $1 -eq 2 ]] || [[ $1 -eq 3 ]]; then
-    return 1  # prime
-  fi
-  if [[ $(($1 % 2)) -eq 0 ]] || [[ $(($1 % 3)) -eq 0 ]]; then
-    return 0  # not a prime
-  fi
-  i=5; w=2
-  while [[ $((i * i)) -le $1 ]]; do
-    if [[ $(($1 % i)) -eq 0 ]]; then
-      return 0  # not a prime
-    fi
-    i=$((i + w))
-    w=$((6 - w))
-  done
-  return 1  # prime
-}
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
 
 ################################################################################
-# Run a test
+# Factorize a number
 ################################################################################
-n=35184372088891 #next prime after 2^45
-t=$({  time -p is_prime $n > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
+echo "Running Factorization test..."
+
+if [ "${machine}" = "Mac" ]
+then
+  factor="gfactor"
+else
+  factor="factor"
+fi
+
+# The following number is a product of two primes
+n=14016833953562607831165883451220753271
+
+tfact=$({ time -p sh -c "$factor $n" > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
+
+################################################################################
+# SHA256
+################################################################################
+echo "Running SHA256 test..."
+
+if [ "${machine}" = "Mac" ]
+then
+  sha="gsha256sum"
+  dd="gdd"
+else
+  sha="sha256sum"
+  dd="dd"
+fi
+
+tsha=$({ time -p sh -c "$dd if=/dev/zero bs=1G count=10 | $sha > /dev/null" > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
+
+################################################################################
+# Bzip
+################################################################################
+echo "Running Bzip test..."
+
+if [ "${machine}" = "Mac" ]
+then
+  dd="gdd"
+else
+  dd="dd"
+fi
+
+tbzip2=$({ time -p sh -c "$dd if=/dev/zero bs=1G count=7 | bzip2 -s > /dev/null" > /dev/null; } 2>&1 | grep real | awk '{print $2"s"}')
+
 
 ################################################################################
 # Report
 ################################################################################
 echo "-------------------------"
-echo "Prime: $t"
+echo "Factorization: $tfact"
+echo "SHA256: $tsha"
+echo "Bzip2: $tbzip2"
