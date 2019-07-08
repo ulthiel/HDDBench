@@ -34,7 +34,7 @@ Read speed: 2213.89 MB/s
 
 ## CPU
 
-The script ```cpu.sh``` runs very simple integer and floating point computations to determine relative CPU speed.
+The script ```cpu.sh``` runs very simple integer and floating point computations using bc to determine relative CPU speed.
 
 Here's an example:
 
@@ -52,3 +52,5 @@ Floating point: 58.19s
 | CPU | Integer [s] | Float [s] |
 | --- | ----------- | --------- |
 | Intel(R) Core(TM) i5-8600 CPU @ 3.10GHz | 59.30 | 58.19 |
+| Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz |  68.46 | 44.69 |
+| Intel(R) Xeon(R) CPU E5-2620 @ 2.00GHz  | 103.65 | 69.64 |
