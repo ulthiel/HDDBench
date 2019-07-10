@@ -30,14 +30,14 @@ Read speed: 2.5GB/s
 
 | HDD | Write [MB/s] | Read [MB/s] |
 | --- | ---- | ----- |
-| Apple SSD SM0512L   | 1200  | 2500  |
+| Apple SSD SM0512L   | 1220.18  | 2502.3 |
 
 #### USB drives
 | HDD | Write [MB/s] | Read [MB/s] |
 | --- | ---- | ----- |
-| Intenso Ultra Line   | 78.2 | 131 |
-| WD My Passport 25E1  | 63.8  |  77.6 |
-| SanDisk Ultra Fit   | 36.5  | 159  |
+| Intenso Ultra Line   |  |  |
+| WD My Passport 25E1  |   |  |
+| SanDisk Ultra Fit   |   |   |
 
 
 ## CPU
