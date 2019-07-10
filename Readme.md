@@ -26,11 +26,16 @@ Read speed: 2.5GB/s
 -------------------------
 ```
 
-### Results
+### Some results
 
 | HDD | Write [MB/s] | Read [MB/s] |
 | --- | ---- | ----- |
 | Apple SSD SM0512L   | 1200  | 2500  |
+
+#### USB drives
+| HDD | Write [MB/s] | Read [MB/s] |
+| --- | ---- | ----- |
+| Intenso Ultra Line   | 78.2 | 131 |
 | WD My Passport 25E1  | 63.8  |  77.6 |
 | SanDisk Ultra Fit   | 36.5  | 159  |
 
@@ -52,11 +57,12 @@ SHA256: 45.75s
 Bzip2: 47.40s
 ```
 
-### Results
+### Some results
 
 | CPU | Factorization [s] | SHA256 [s] | Bzip2 [s] |
 | --- | ----------------- | ---------- | --------- |
-| Intel(R) Core(TM) i5-8600 CPU @ 3.10GHz | 47.45 | 45.75 | 47.40 |
-| Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz | 56.73 | 52.93 | 62.75 |
-| Intel(R) Core(TM) i7-7Y75 CPU @ 1.30GHz | 56.78 | 61.96 | 63.73 |
-| Intel(R) Xeon(R) CPU E5-2620 @ 2.00GHz  | 88.47 | 104.90 | 103.85 |
+| [Intel(R) Core(TM) i5-8600 CPU @ 3.10GHz](https://ark.intel.com/content/www/us/en/ark/products/129937/intel-core-i5-8600-processor-9m-cache-up-to-4-30-ghz.html) | 47.45 | 45.75 | 47.40 |
+| [Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz](https://ark.intel.com/content/www/us/en/ark/products/65523/intel-core-i7-3770k-processor-8m-cache-up-to-3-90-ghz.html) | 56.73 | 52.93 | 62.75 |
+| [Intel(R) Core(TM) i7-7Y75 CPU @ 1.30GHz](https://ark.intel.com/content/www/us/en/ark/products/95441/intel-core-i7-7y75-processor-4m-cache-up-to-3-60-ghz.html) | 56.78 | 61.96 | 63.73 |
+| [Intel(R) Core(TM) i3-2330M CPU @ 2.20GHz](https://ark.intel.com/content/www/us/en/ark/products/53434/intel-core-i3-2330m-processor-3m-cache-2-20-ghz.html) | 84.10  | 105.51  | 106.38  |
+| [Intel(R) Xeon(R) CPU E5-2620 @ 2.00GHz](https://ark.intel.com/content/www/us/en/ark/products/64594/intel-xeon-processor-e5-2620-15m-cache-2-00-ghz-7-20-gt-s-intel-qpi.html) | 88.47 | 104.90 | 103.85 |
