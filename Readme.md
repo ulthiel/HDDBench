@@ -36,7 +36,7 @@ Read speed: 2.5GB/s
 | HDD | Write [MB/s] | Read [MB/s] |
 | --- | ---- | ----- |
 | Intenso Ultra Line   |  |  |
-| WD My Passport 25E1  |   |  |
+| WD My Passport 25E1  | 80.85  | 92.33 |
 | SanDisk Ultra Fit   |   |   |
 
 
