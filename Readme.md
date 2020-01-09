@@ -27,6 +27,7 @@ Bzip2: 47.40s
 | CPU | Factorization [s] | SHA256 [s] | Bzip2 [s] |
 | --- | ----------------- | ---------- | --------- |
 | [Intel(R) Core(TM) i5-8600 CPU @ 3.10GHz](https://ark.intel.com/content/www/us/en/ark/products/129937/intel-core-i5-8600-processor-9m-cache-up-to-4-30-ghz.html) | 47.45 | 45.75 | 47.40 |
+| [Intel(R) Xeon(R) Gold 6240M CPU @ 2.60GHz](https://ark.intel.com/content/www/us/en/ark/products/192443/intel-xeon-gold-6240-processor-24-75m-cache-2-60-ghz.html) | 41.26 | 48.04 | 54.67 |
 | [Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz](https://ark.intel.com/content/www/us/en/ark/products/65523/intel-core-i7-3770k-processor-8m-cache-up-to-3-90-ghz.html) | 56.73 | 52.93 | 62.75 |
 | [Intel(R) Core(TM) i7-7Y75 CPU @ 1.30GHz](https://ark.intel.com/content/www/us/en/ark/products/95441/intel-core-i7-7y75-processor-4m-cache-up-to-3-60-ghz.html) | 56.78 | 61.96 | 63.73 |
 | [Intel(R) Xeon(R) CPU E5-2697A v4 @ 2.60GHz](https://ark.intel.com/content/www/us/en/ark/products/91768/intel-xeon-processor-e5-2697a-v4-40m-cache-2-60-ghz.html)  | 60.63  | 56.18 | 77.02 |
