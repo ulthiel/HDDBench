@@ -33,7 +33,7 @@ Bzip2: 47.40s
 | [Intel(R) Xeon(R) CPU E5-2697A v4 @ 2.60GHz](https://ark.intel.com/content/www/us/en/ark/products/91768/intel-xeon-processor-e5-2697a-v4-40m-cache-2-60-ghz.html)  | 60.63  | 56.18 | 77.02 |
 | [Intel(R) Core(TM) i3-2330M CPU @ 2.20GHz](https://ark.intel.com/content/www/us/en/ark/products/53434/intel-core-i3-2330m-processor-3m-cache-2-20-ghz.html) | 84.10  | 105.51  | 106.38  |
 | [Intel(R) Xeon(R) CPU E5-2620 @ 2.00GHz](https://ark.intel.com/content/www/us/en/ark/products/64594/intel-xeon-processor-e5-2620-15m-cache-2-00-ghz-7-20-gt-s-intel-qpi.html) | 88.47 | 104.90 | 103.85 |
-
+| [Intel(R) Celeron(R) N4100 CPU @ 1.10GHz](https://ark.intel.com/content/www/us/en/ark/products/128983/intel-celeron-processor-n4100-4m-cache-up-to-2-40-ghz.html) |88.28|102.13|125.34|
 
 
 ## HDD
